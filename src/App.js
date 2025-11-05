@@ -1,41 +1,28 @@
-import React, { useState } from 'react'; // <-- 1. IMPORTAR useState
+import React from 'react'; 
 
-// Tus otros imports
+// Tus componentes
 import Map from './Map';            
-import InformesForm from './InformesForm'; 
+import InformesForm from './InformesForm'; // (El tuyo se llama así, ¡está bien!)
 import AlertList from './AlertList';   
-import ReportModal from './ReportModal'; // <-- 2. IMPORTAR EL MODAL
 
 // Tus imports de CSS
-import './App.css';                
-import './InformesForm.css'; // (Este es el tuyo, 'InformesForm.css')
-import './AlertList.css';         
-import './ReportModal.css'; // <-- 3. IMPORTAR CSS DEL MODAL
+import './App.css'; 
+import './AlertList.css';               
 
 function App() {
-  // 4. ESTADO PARA SABER QUÉ REPORTE ESTÁ SELECCIONADO
-  const [selectedReport, setSelectedReport] = useState(null);
-
-  // 5. Función para cerrar el modal
-  const closeModal = () => {
-    setSelectedReport(null);
-  };
 
   return (
     <div className="App">
+      {/* El 'manager' de las notificaciones pop-up */}
+       
+      {/* Componente 'fantasma' que escucha las alertas */}
       <AlertList /> 
-
-      {/* 6. LE PASAMOS LA FUNCIÓN AL MAPA */}
-      <Map onPinClick={setSelectedReport} /> 
-
+      
+      {/* El Mapa (sin lógica extra) */}
+      <Map /> 
+      
+      {/* El botón flotante '+' que abre su propio modal */}
       <InformesForm /> 
-
-      {/* 7. MOSTRAMOS EL MODAL SI HAY UN REPORTE SELECCIONADO */}
-      <ReportModal 
-        isOpen={selectedReport !== null} 
-        onClose={closeModal} 
-        report={selectedReport} 
-      />
     </div>
   );
 }

@@ -1,33 +1,27 @@
+// src/AlertList.js
+
 import React, { useState, useEffect } from 'react';
 import { supabase } from './supabaseClient';
+import Modal from 'react-modal'; // <-- 1. Importamos el Modal
+
+// 2. Le decimos a react-modal que se "pegue" al 'root' de nuestra app
+Modal.setAppElement('#root');
 
 function AlertList() {
-  const [alerts, setAlerts] = useState([]);
+  // 3. Estado para guardar la alerta que se está mostrando
+  const [activeAlert, setActiveAlert] = useState(null); 
 
   useEffect(() => {
-    async function getInitialAlerts() {
-      const { data, error } = await supabase
-        .from('alerts') // <--- CORREGIDO (de 'alertas' a 'alerts')
-        .select('*')
-        .order('created_at', { ascending: false }); 
-
-      if (error) {
-        console.error('Error cargando alertas iniciales:', error.message);
-      } else {
-        setAlerts(data);
-      }
-    }
-    
-    getInitialAlerts();
-
+    // 4. Nos suscribimos a la tabla 'alerts'
     const subscription = supabase
-      .channel('alerts_channel')
+      .channel('alerts_channel') 
       .on(
         'postgres_changes',
-        { event: 'INSERT', schema: 'public', table: 'alerts' }, // <--- CORREGIDO
+        { event: 'INSERT', schema: 'public', table: 'alerts' }, 
         (payload) => {
           console.log('¡Nueva alerta recibida!', payload.new);
-          setAlerts(currentAlerts => [payload.new, ...currentAlerts]);
+          // 5. ¡Guardamos la nueva alerta en el estado! Esto la mostrará
+          setActiveAlert(payload.new);
         }
       )
       .subscribe();
@@ -37,28 +31,29 @@ function AlertList() {
     };
   }, []); 
 
-  if (alerts.length === 0) {
-    return (
-      <div className="alert-list">
-        <h4>Alertas Oficiales</h4>
-        <div className="alert-item">
-          <p>No hay alertas activas por el momento.</p>
-        </div>
-      </div>
-    );
-  }
+  // 6. Función para cerrar el modal
+  const closeModal = () => {
+    setActiveAlert(null);
+  };
 
+  // 7. El Modal.
+  // 'isOpen={activeAlert !== null}' significa: "está abierto si 'activeAlert' NO es nulo"
   return (
-    <div className="alert-list">
-      <h4>Alertas Oficiales</h4>
-      {alerts.map(alert => (
-        // --- CORREGIDO AQUÍ ABAJO ---
-        <div key={alert.id} className={`alert-item severity-${alert.severity}`}>
-          <strong>{alert.title}</strong>
-          <p>{alert.description}</p>
-        </div>
-      ))}
-    </div>
+    <Modal
+      isOpen={activeAlert !== null}
+      onRequestClose={closeModal} // Permite cerrar con la tecla "Esc"
+      className={`alert-modal severity-${activeAlert?.severity}`} // CSS + color de severidad
+      overlayClassName="alert-modal-overlay" // CSS para el fondo oscuro
+    >
+      <div className="alert-modal-header">
+        <span className="alert-icon">⚠️</span> {/* Tu ícono de exclamación */}
+        <h3>¡{activeAlert?.title}!</h3>
+        <button onClick={closeModal} className="alert-close-button">&times;</button> {/* El botón "X" */}
+      </div>
+      <div className="alert-modal-body">
+        <p>{activeAlert?.description}</p>
+      </div>
+    </Modal>
   );
 }
 

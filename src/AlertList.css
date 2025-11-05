@@ -1,78 +1,99 @@
-.alert-list {
-    /* Posición: flotando sobre todo */
-    position: absolute;
-    top: 10px;
-    left: 10px;
-  
-    /* Asegura que esté sobre el mapa */
-    z-index: 1000;
-  
-    /* Estilos visuales */
-    background-color: white;
-    padding: 15px;
-    border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    width: 250px;
-    text-align: left;
-  
-    /* Para que quepan las alertas */
-    max-height: 400px;
-    overflow-y: auto; /* Scroll si hay muchas alertas */
-  }
-  
-  .alert-list h4 {
-    margin: 0 0 10px 0;
-    text-align: center;
-    border-bottom: 1px solid #eee;
-    padding-bottom: 5px;
-  }
-  
-  .alert-item {
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    padding: 10px;
-    margin-bottom: 10px;
-  }
-  
-  .alert-item strong {
-    font-size: 1.1em;
-  }
-  
-  .alert-item p {
-    margin: 5px 0 0 0;
-    font-size: 0.9em;
-  }
-  
-  /* Colores por severidad */
-  .alert-item.severity-alta {
-    border-left: 5px solid #d9534f; /* Rojo */
-  }
-  
-  .alert-item.severity-media {
-    border-left: 5px solid #f0ad4e; /* Naranja */
-  }
-  
-  .alert-item.severity-baja {
-    border-left: 5px solid #5cb85c; /* Verde */
-  }
+/* src/AlertList.css */
 
-  /* 1. Definimos la animación "palpitar" */
-@keyframes pulse {
+/* 1. El Fondo Oscuro (Overlay) */
+.alert-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.75); /* Negro semi-transparente */
+    z-index: 3000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  /* 2. El Contenedor del Modal */
+  .alert-modal {
+    background: white;
+    border-radius: 8px;
+    width: 90%;
+    max-width: 450px; /* Ancho del pop-up */
+    outline: none;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+    padding: 20px;
+    border-top: 10px solid #ccc; /* Borde por defecto */
+  }
+  
+  /* 3. El Header (Título, Ícono, "X") */
+  .alert-modal-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+  }
+  
+  .alert-icon {
+    font-size: 2.5em;
+    font-weight: bold;
+    margin-right: 15px;
+    color: #333;
+  }
+  
+  .alert-modal-header h3 {
+    margin: 0;
+    font-size: 1.8em;
+    flex-grow: 1; /* Ocupa el espacio disponible */
+  }
+  
+  .alert-close-button {
+    background: none;
+    border: none;
+    font-size: 2.5em;
+    font-weight: bold;
+    cursor: pointer;
+    color: #aaa;
+    padding: 0;
+    line-height: 1;
+  }
+  .alert-close-button:hover {
+    color: #333;
+  }
+  
+  /* 4. El Cuerpo (Descripción) */
+  .alert-modal-body p {
+    margin: 0;
+    font-size: 1.1em;
+    line-height: 1.6;
+  }
+  
+  /* 5. Los Colores de Severidad (¡Tu idea!) */
+  .alert-modal.severity-alta {
+    border-top-color: #d9534f; /* Rojo */
+    animation: pulse-red 2s infinite; /* ¡Palpitación! */
+  }
+  .alert-modal.severity-alta .alert-icon {
+    color: #d9534f;
+  }
+  
+  .alert-modal.severity-media {
+    border-top-color: #f0ad4e; /* Naranja */
+  }
+  .alert-modal.severity-media .alert-icon {
+    color: #f0ad4e;
+  }
+  
+  /* (Puedes añadir 'severity-baja' si quieres) */
+  
+  /* 6. La Animación de Palpitación (¡Tu idea!) */
+  @keyframes pulse-red {
     0% {
-      box-shadow: 0 0 0 0 rgba(217, 83, 79, 0.7); /* Rojo de bootstrap */
+      box-shadow: 0 0 0 0 rgba(217, 83, 79, 0.7);
     }
     70% {
-      box-shadow: 0 0 0 10px rgba(217, 83, 79, 0);
+      box-shadow: 0 0 0 15px rgba(217, 83, 79, 0);
     }
     100% {
       box-shadow: 0 0 0 0 rgba(217, 83, 79, 0);
     }
-  }
-  
-  /* 2. Aplicamos la animación SOLO a las alertas de severidad 'alta' */
-  .alert-item.severity-alta {
-    border-left: 5px solid #d9534f; /* Rojo */
-  
-    /* ¡La magia! */
-    animation: pulse 2s infinite;
   }
