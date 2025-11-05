@@ -1,29 +1,26 @@
-import React from 'react'; 
+// src/App.js
 
-// Tus componentes
-import Map from './Map';            
-import InformesForm from './InformesForm'; // (El tuyo se llama así, ¡está bien!)
-import AlertList from './AlertList';   
+import React from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import HomePage from './HomePage';     // Tu página del mapa
+import AdminPanel from './AdminPanel'; // Tu panel secreto
 
-// Tus imports de CSS
-import './App.css'; 
-import './AlertList.css';               
+// Importamos todos los CSS que usa HomePage
+import './App.css';
+import './AlertList.css';
+import './ReportModal.css'; 
 
 function App() {
-
   return (
-    <div className="App">
-      {/* El 'manager' de las notificaciones pop-up */}
-       
-      {/* Componente 'fantasma' que escucha las alertas */}
-      <AlertList /> 
-      
-      {/* El Mapa (sin lógica extra) */}
-      <Map /> 
-      
-      {/* El botón flotante '+' que abre su propio modal */}
-      <InformesForm /> 
-    </div>
+    <BrowserRouter>
+      <Routes>
+        {/* Ruta Principal: El mapa */}
+        <Route path="/" element={<HomePage />} />
+        
+        {/* Ruta Secreta: El panel de admin */}
+        <Route path="/admin" element={<AdminPanel />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 

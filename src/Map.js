@@ -1,4 +1,4 @@
-// src/Map.js (Versión limpia)
+// src/Map.js
 
 import React, { useEffect, useState } from 'react';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
@@ -6,8 +6,8 @@ import { supabase } from './supabaseClient';
 
 const centroTemuco = [-38.7359, -72.5904];
 
-// Ya no recibe 'onPinClick'
-function Map() { 
+// 1. Volvemos a aceptar 'onPinClick' como prop
+function Map({ onPinClick }) { 
   const [reports, setReports] = useState([]); 
 
   useEffect(() => {
@@ -53,9 +53,14 @@ function Map() {
         <Marker 
           key={report.id} 
           position={[report.lat, report.lon]}
-          // Ya no tiene el 'eventHandlers'
+          // 2. Volvemos a añadir el manejador de clic
+          eventHandlers={{
+            click: () => {
+              onPinClick(report); // Llama a la función en App.js
+            },
+          }}
         >
-          {/* Dejamos el Popup simple */}
+          {/* 3. El Popup sigue ahí (es la ventanita chica) */}
           <Popup>
             <strong>{report.type}</strong><br />
             {report.description}

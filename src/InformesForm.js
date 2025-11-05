@@ -143,7 +143,7 @@ function InformesForm() {
           <label htmlFor="type">Tipo de emergencia:</label>
           <select id="type" value={type} onChange={(e) => setType(e.target.value)} style={{width: '100%', padding: '8px', margin: '10px 0'}}>
             <option value="incendio">Incendio</option>
-            <option value="derrumba">Derrumbe</option>
+            <option value="derrumbe">Derrumbe</option>
             <option value="inundacion">Inundación</option>
             <option value="otro">Otro</option>
           </select>

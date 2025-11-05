@@ -5,6 +5,7 @@ import { supabase } from './supabaseClient';
 import Modal from 'react-modal'; // <-- 1. Importamos el Modal
 
 // 2. Le decimos a react-modal que se "pegue" al 'root' de nuestra app
+// (Asegúrate de que tu public/index.html tenga <div id="root"></div>)
 Modal.setAppElement('#root');
 
 function AlertList() {
@@ -46,7 +47,7 @@ function AlertList() {
       overlayClassName="alert-modal-overlay" // CSS para el fondo oscuro
     >
       <div className="alert-modal-header">
-        <span className="alert-icon">⚠️</span> {/* Tu ícono de exclamación */}
+        <span className="alert-icon">⚠️</span> 
         <h3>¡{activeAlert?.title}!</h3>
         <button onClick={closeModal} className="alert-close-button">&times;</button> {/* El botón "X" */}
       </div>
