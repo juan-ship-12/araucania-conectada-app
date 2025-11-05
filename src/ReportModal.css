@@ -1,0 +1,59 @@
+/* src/ReportModal.css */
+
+.report-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.75); /* Fondo negro semi-transparente */
+    z-index: 2000; /* Por encima de todo */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .report-modal {
+    background: white;
+    border-radius: 8px;
+    padding: 20px;
+    width: 90%;
+    max-width: 600px; /* Ancho máximo */
+    max-height: 80vh; /* Alto máximo */
+    overflow-y: auto;
+    outline: none;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+  }
+  
+  .modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+  }
+  
+  .modal-header h3 {
+    margin: 0;
+    font-size: 1.5em;
+  }
+  
+  .close-button {
+    background: none;
+    border: none;
+    font-size: 2em;
+    font-weight: bold;
+    cursor: pointer;
+    color: #aaa;
+    padding: 0;
+    line-height: 1;
+  }
+  
+  .close-button:hover {
+    color: #333;
+  }
+  
+  .modal-content p {
+    line-height: 1.6;
+  }
