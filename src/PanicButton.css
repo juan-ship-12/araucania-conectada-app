@@ -1,0 +1,105 @@
+/* src/PanicButton.css */
+
+/* 1. El Botón Flotante de SOS */
+.panic-button {
+    position: absolute;
+    bottom: 20px;
+    left: 20px; /* Esquina inferior izquierda */
+    background-color: #d9534f; /* Rojo de alerta */
+    color: white;
+    border: none;
+    border-radius: 50%; /* Redondo */
+    width: 60px;
+    height: 60px;
+    font-size: 1.2em; /* Tamaño del texto "SOS" */
+    font-weight: bold;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+    z-index: 1001; /* Sobre el mapa */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease-in-out;
+  }
+  
+  .panic-button:hover {
+    transform: scale(1.1); /* Animación al pasar el mouse */
+  }
+  
+  /* 2. El Modal de Pánico (usamos los estilos que ya existen) */
+  /* Reutilizamos los estilos del ReportModal para consistencia */
+  .panic-modal-overlay {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-color: rgba(0, 0, 0, 0.75);
+    z-index: 4000; /* Super alto */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .panic-modal {
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+    width: 90%;
+    max-width: 400px;
+    outline: none;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+  }
+  
+  .panic-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+  }
+  
+  .panic-modal-header h4 {
+    margin: 0;
+    font-size: 1.3em;
+    color: #d9534f; /* Título en rojo */
+  }
+  
+  .panic-modal-header .close-button {
+    background: none; border: none; font-size: 2em;
+    cursor: pointer; color: #aaa;
+  }
+  
+  .panic-modal-body p {
+    text-align: center;
+    font-size: 1.1em;
+    line-height: 1.5;
+    margin-bottom: 20px;
+  }
+  
+  /* 3. Los botones de "Llamar" */
+  .call-button-group {
+    display: flex;
+    flex-direction: column;
+    gap: 15px; /* Espacio entre botones */
+  }
+  
+  .call-button {
+    display: block; /* Ocupa todo el ancho */
+    padding: 15px;
+    font-size: 1.2em;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none; /* Quita el subrayado del link */
+    color: white;
+    transition: all 0.2s;
+  }
+  
+  .call-button.carabineros { background-color: #007749; } /* Verde Carabineros */
+  .call-button.bomberos { background-color: #d9534f; } /* Rojo Bomberos */
+  .call-button.ambulancia { background-color: #007bff; } /* Azul Ambulancia */
+  
+  .call-button:hover {
+    opacity: 0.8;
+  }
