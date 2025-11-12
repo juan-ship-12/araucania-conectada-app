@@ -4,12 +4,13 @@ import React, { useState } from 'react'; // <-- Importamos 'useState'
 import Map from './Map';            
 import InformesForm from './InformesForm'; 
 import AlertList from './AlertList';   
-import ReportModal from './ReportModal'; // <-- 1. Importa el Modal
+import ReportModal from './ReportModal'; // <-- 1. Importa el Modal 
 
 // Tus imports de CSS
 import './App.css';                
 import './AlertList.css';
 import './ReportModal.css'; // <-- 2. Importa el CSS del Modal
+import './InformesForm.css';
 
 function App() {
   // 3. Añade la "memoria" para el pin seleccionado

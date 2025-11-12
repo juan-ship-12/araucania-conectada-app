@@ -7,3 +7,10 @@ body {
 .App {
   text-align: center;
 }
+
+/* FIX: Forzar a SweetAlert2 a estar POR ENCIMA 
+  de todos los otros modales (que tienen z-index: 3000)
+*/
+.swal2-container {
+  z-index: 9999 !important;
+}

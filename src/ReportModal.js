@@ -1,20 +1,48 @@
-// src/ReportModal.js
+// src/ReportModal.js (Actualizado con Geocodificación Inversa)
+
 import React, { useState, useEffect } from 'react';
 import Modal from 'react-modal';
 
 function ReportModal({ report, isOpen, onClose }) {
   const [showSensitiveImage, setShowSensitiveImage] = useState(false);
+  
+  // <-- 1. NUEVO ESTADO para guardar la dirección
+  const [address, setAddress] = useState('Cargando dirección...');
 
+  // Efecto para la imagen sensible (sin cambios)
   useEffect(() => {
     if (isOpen) {
       setShowSensitiveImage(false); 
     }
   }, [isOpen]);
 
+  // <-- 2. NUEVO EFECTO para buscar la dirección real
+  useEffect(() => {
+    if (isOpen && report) { // Si el modal está abierto y tenemos un reporte
+      setAddress('Buscando dirección...'); // Mensaje de carga
+      
+      // Llamada a la API de Nominatim (Geocodificación inversa)
+      fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${report.lat}&lon=${report.lon}`)
+        .then(response => response.json())
+        .then(data => {
+          if (data && data.display_name) {
+            setAddress(data.display_name); // ¡Guardamos la dirección real!
+          } else {
+            setAddress('No se pudo encontrar una dirección.');
+          }
+        })
+        .catch(error => {
+          console.error('Error en Geocodificación:', error);
+          setAddress('Error al buscar dirección. (Ver Lat/Lon abajo)');
+        });
+    }
+  }, [isOpen, report]); // Se ejecuta cada vez que el modal se abre o el reporte cambia
+
   if (!report) {
     return null;
   }
 
+  // Lógica de imagen sensible (sin cambios)
   const renderImage = () => {
     if (!report.image_url) {
       return null;
@@ -60,8 +88,13 @@ function ReportModal({ report, isOpen, onClose }) {
 
         {renderImage()}
 
+        {/* <-- 3. LÍNEA ACTUALIZADA (muestra la dirección) --> */}
         <p style={{marginTop: '15px'}}>
-          <strong>Ubicación (Lat/Lon):</strong> {report.lat}, {report.lon}
+          <strong>Ubicación:</strong> {address}
+        </p>
+        {/* Mantenemos Lat/Lon como respaldo por si la API falla */}
+        <p style={{fontSize: '0.8em', color: '#666'}}>
+          (Lat: {report.lat}, Lon: {report.lon})
         </p>
       </div>
     </Modal>

@@ -1,0 +1,147 @@
+/* src/InformesForm.css (Completo y Corregido) */
+
+.form-step-container {
+    padding: 10px;
+  }
+  
+  .step-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+  }
+  
+  .step-header h4 {
+    margin: 0;
+    font-size: 1.3em;
+  }
+  
+  .step-header .close-button {
+    background: none;
+    border: none;
+    font-size: 2em;
+    cursor: pointer;
+    color: #aaa;
+  }
+  
+  .location-confirm p {
+    font-size: 1.1em;
+    text-align: center;
+    margin-bottom: 20px;
+    line-height: 1.5;
+  }
+  
+  .location-confirm strong {
+    font-size: 1.2em;
+    color: #333;
+  }
+  
+  .button-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 20px;
+  }
+  
+  .button-group button {
+    padding: 12px;
+    font-size: 1.1em;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+  
+  .confirm-button {
+    background-color: #d9534f; /* Rojo */
+    color: white;
+  }
+  
+  .cancel-button {
+    background-color: #f0f0f0; /* Gris claro */
+    color: #555;
+  }
+  
+  /* --- ESTA ES LA SECCIÓN CORREGIDA --- */
+  .icon-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* 2 columnas */
+    gap: 15px; /* Espacio entre los botones */
+    margin-bottom: 20px;
+  }
+  
+  .icon-button {
+    background-color: #f7f7f7;
+    border: 2px solid #eee;
+    border-radius: 12px;
+    padding: 15px 10px;
+    cursor: pointer;
+    transition: all 0.2s;
+    
+    /* ¡LA MAGIA ESTÁ AQUÍ! */
+    display: flex;
+    flex-direction: column;  /* Pone los items en vertical */
+    align-items: center;    /* Centra horizontalmente */
+    justify-content: center; /* Centra verticalmente */
+    height: 120px; /* Dales una altura fija */
+  }
+  
+  .icon-button.selected {
+    border-color: #d9534f; /* Borde rojo al seleccionar */
+    background-color: #fff8f8;
+    box-shadow: 0 0 10px rgba(217, 83, 79, 0.3);
+  }
+  
+  .icon-button img {
+    width: 60px;
+    height: 60px;
+    margin-bottom: 10px; /* Espacio entre imagen y texto */
+    object-fit: contain; 
+  }
+  
+  .icon-button span {
+    font-weight: bold;
+    color: #333;
+    font-size: 1em; 
+  }
+  /* --- FIN DE LA SECCIÓN CORREGIDA --- */
+  
+  
+  /* Resto del formulario */
+  .form-step-container label {
+    font-weight: bold;
+    margin-top: 15px;
+    display: block;
+  }
+  
+  .form-step-container textarea {
+    width: 100%;
+    min-height: 60px;
+    padding: 8px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box; /* Importante */
+  }
+  
+  .form-step-container input[type="file"] {
+    width: 100%;
+    margin: 10px 0;
+  }
+  
+  .form-step-container .checkbox-container {
+    display: flex;
+    align-items: center;
+    margin: 10px 0 15px 0; /* Añadido más espacio abajo */
+  }
+  
+  .form-step-container .checkbox-container input {
+    margin-right: 10px;
+  }
+  
+  .form-step-container .checkbox-container label {
+    font-weight: normal;
+    margin-top: 0;
+  }

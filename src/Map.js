@@ -1,4 +1,4 @@
-// src/Map.js (Con TODO corregido)
+// src/Map.js (Con Íconos y Lógica Corregida)
 
 import React, { useEffect, useState } from 'react';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
@@ -10,28 +10,28 @@ const centroTemuco = [-38.7359, -72.5904];
 // -- ÍCONOS --
 const fireIcon = L.icon({
   iconUrl: '/Fuego.gif', 
-  iconSize: [45, 45], // <-- 1. TAMAÑO 45x45
-  iconAnchor: [22, 22], // La mitad
+  iconSize: [50, 50], 
+  iconAnchor: [22, 22], 
   popupAnchor: [0, -22] 
 });
 
 const landslideIcon = L.icon({
-  iconUrl: '/Derrumbe.png', // <-- 2. USANDO EL PNG ESTÁTICO
-  iconSize: [38, 38], 
+  iconUrl: '/Derrumbe.png', 
+  iconSize: [36, 36], 
   iconAnchor: [19, 19], 
   popupAnchor: [0, -19]
 });
 
 const floodIcon = L.icon({
   iconUrl: '/Inundacion.gif', 
-  iconSize: [38, 38],
+  iconSize: [35, 36],
   iconAnchor: [19, 19],
   popupAnchor: [0, -19]
 });
 
 const defaultIcon = L.icon({
   iconUrl: '/Otro.gif', 
-  iconSize: [38, 38],
+  iconSize: [36, 36],
   iconAnchor: [19, 19],
   popupAnchor: [0, -19]
 });
@@ -41,7 +41,7 @@ const getReportIcon = (reportType) => {
   switch (reportType) {
     case 'incendio':
       return fireIcon;
-    case 'derrumbe': // <-- 3. USA EL VALOR 'derrumba' (del formulario)
+    case 'derrumbe': 
       return landslideIcon;
     case 'inundacion':
       return floodIcon;
@@ -53,7 +53,6 @@ const getReportIcon = (reportType) => {
 };
 // -----------------
 
-// 4. ACEPTA 'onPinClick'
 function Map({ onPinClick }) { 
   const [reports, setReports] = useState([]); 
 
@@ -87,7 +86,6 @@ function Map({ onPinClick }) {
           position={[report.lat, report.lon]}
           icon={getReportIcon(report.type)} 
           
-          // 5. AÑADE EL MANEJADOR DE CLIC (Esto es lo que faltaba)
           eventHandlers={{
             click: () => {
               onPinClick(report); // Le avisa a App.js
