@@ -1,13 +1,61 @@
-// src/Map.js
+// src/Map.js (Con TUS NUEVOS Íconos)
 
 import React, { useEffect, useState } from 'react';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
-import { supabase } from './supabaseClient'; 
+import { supabase } from './supabaseClient';
+import L from 'leaflet'; 
 
 const centroTemuco = [-38.7359, -72.5904];
 
-// 1. Volvemos a aceptar 'onPinClick' como prop
-function Map({ onPinClick }) { 
+// -- ÍCONOS PERSONALIZADOS (Leyendo TUS archivos de /public) --
+
+const fireIcon = L.icon({
+  iconUrl: '/Fuego.gif', // <-- Tu GIF de fuego
+  iconSize: [55, 55], // Un poco más grande para que se note
+  iconAnchor: [20, 20], // La mitad del tamaño
+  popupAnchor: [0, -20] // Arriba del centro
+});
+
+const landslideIcon = L.icon({
+  iconUrl: '/Derrumbe.png', // <-- Tu PNG de derrumbe
+  iconSize: [38, 38], // Tamaño estándar
+  iconAnchor: [19, 19], // La mitad
+  popupAnchor: [0, -19]
+});
+
+const floodIcon = L.icon({
+  iconUrl: '/Inundacion.gif', // <-- Tu PNG de inundación
+  iconSize: [38, 38],
+  iconAnchor: [19, 19],
+  popupAnchor: [0, -19]
+});
+
+const defaultIcon = L.icon({
+  iconUrl: '/Otro.gif', // <-- Tu GIF de "Otro"
+  iconSize: [38, 38],
+  iconAnchor: [19, 19],
+  popupAnchor: [0, -19]
+});
+// --------------------------------------------------
+
+const getReportIcon = (reportType) => {
+  switch (reportType) {
+    case 'incendio':
+      return fireIcon;
+    case 'derrumba':
+      return landslideIcon;
+    case 'inundacion':
+      return floodIcon;
+    case 'otro':
+      return defaultIcon;
+    default:
+      return defaultIcon; // Cualquier otra cosa usará el pin 'Otro.gif'
+  }
+};
+// --------------------------------------------------
+
+
+function Map() { 
   const [reports, setReports] = useState([]); 
 
   useEffect(() => {
@@ -53,14 +101,8 @@ function Map({ onPinClick }) {
         <Marker 
           key={report.id} 
           position={[report.lat, report.lon]}
-          // 2. Volvemos a añadir el manejador de clic
-          eventHandlers={{
-            click: () => {
-              onPinClick(report); // Llama a la función en App.js
-            },
-          }}
+          icon={getReportIcon(report.type)} 
         >
-          {/* 3. El Popup sigue ahí (es la ventanita chica) */}
           <Popup>
             <strong>{report.type}</strong><br />
             {report.description}
