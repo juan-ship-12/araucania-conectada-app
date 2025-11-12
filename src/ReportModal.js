@@ -1,23 +1,56 @@
 // src/ReportModal.js
-
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Modal from 'react-modal';
 
 function ReportModal({ report, isOpen, onClose }) {
+  const [showSensitiveImage, setShowSensitiveImage] = useState(false);
+
+  useEffect(() => {
+    if (isOpen) {
+      setShowSensitiveImage(false); 
+    }
+  }, [isOpen]);
+
   if (!report) {
-    return null; // No mostrar nada si no hay reporte seleccionado
+    return null;
   }
+
+  const renderImage = () => {
+    if (!report.image_url) {
+      return null;
+    }
+    if (report.is_sensitive && !showSensitiveImage) {
+      return (
+        <div className="image-blur-container">
+          <img src={report.image_url} alt="Contenido sensible" className="image-blur" />
+          <div className="blur-overlay">
+            <p>⚠️ Contenido sensible</p>
+            <button onClick={() => setShowSensitiveImage(true)} className="reveal-button">
+              Mostrar
+            </button>
+          </div>
+        </div>
+      );
+    }
+    return (
+      <img 
+        src={report.image_url} 
+        alt="Reporte" 
+        style={{ width: '100%', height: 'auto', borderRadius: '4px', marginTop: '10px' }} 
+      />
+    );
+  };
 
   return (
     <Modal
-      isOpen={isOpen} // Le decimos si debe estar abierto o no
-      onRequestClose={onClose} // Le decimos qué hacer cuando se quiere cerrar (ej: clic afuera)
-      className="report-modal" // CSS para el contenido
-      overlayClassName="report-modal-overlay" // CSS para el fondo oscuro
-      ariaHideApp={false} // Necesario para que no dé errores de accesibilidad
+      isOpen={isOpen}
+      onRequestClose={onClose}
+      className="report-modal"
+      overlayClassName="report-modal-overlay"
+      ariaHideApp={false}
     >
       <div className="modal-header">
-        <h3>Reporte: {report.type || 'Sin tipo'}</h3>
+        <h3 style={{ textTransform: 'capitalize' }}>Reporte: {report.type}</h3>
         <button onClick={onClose} className="close-button">&times;</button>
       </div>
 
@@ -25,10 +58,11 @@ function ReportModal({ report, isOpen, onClose }) {
         <p><strong>Descripción:</strong></p>
         <p>{report.description || 'No hay descripción.'}</p>
 
-        {/* Aquí podríamos poner una galería de fotos en el futuro */}
-        {/* <img src={report.image_url} alt="Foto del reporte" /> */}
+        {renderImage()}
 
-        <p><strong>Ubicación (Lat/Lon):</strong> {report.lat}, {report.lon}</p>
+        <p style={{marginTop: '15px'}}>
+          <strong>Ubicación (Lat/Lon):</strong> {report.lat}, {report.lon}
+        </p>
       </div>
     </Modal>
   );
