@@ -3,8 +3,8 @@
 /* 1. El Botón Flotante de SOS */
 .panic-button {
     position: absolute;
-    bottom: 20px;
-    left: 20px; /* Esquina inferior izquierda */
+    top: 20px;    /* <-- ¡CAMBIO AQUÍ! Ahora arriba */
+    right: 20px;  /* <-- ¡CAMBIO AQUÍ! Ahora a la derecha */
     background-color: #d9534f; /* Rojo de alerta */
     color: white;
     border: none;
@@ -20,14 +20,34 @@
     align-items: center;
     justify-content: center;
     transition: all 0.2s ease-in-out;
+  
+    /* <-- ¡NUEVA ANIMACIÓN PULSANTE! --> */
+    animation: pulse 1.5s infinite; /* Aplica la animación */
   }
   
   .panic-button:hover {
-    transform: scale(1.1); /* Animación al pasar el mouse */
+    transform: scale(1.1); /* Sigue la animación al pasar el mouse */
   }
   
-  /* 2. El Modal de Pánico (usamos los estilos que ya existen) */
-  /* Reutilizamos los estilos del ReportModal para consistencia */
+  /* Definición de la animación de latido */
+  @keyframes pulse {
+    0% {
+      transform: scale(1);
+      box-shadow: 0 0 0 0 rgba(217, 83, 79, 0.7); /* Sombra inicial */
+    }
+    70% {
+      transform: scale(1.05); /* Se agranda un poco */
+      box-shadow: 0 0 0 10px rgba(217, 83, 79, 0); /* Sombra se expande y desvanece */
+    }
+    100% {
+      transform: scale(1);
+      box-shadow: 0 0 0 0 rgba(217, 83, 79, 0); /* Vuelve al estado inicial */
+    }
+  }
+  /* <-- FIN NUEVA ANIMACIÓN --> */
+  
+  
+  /* 2. El Modal de Pánico (sin cambios) */
   .panic-modal-overlay {
     position: fixed;
     top: 0; left: 0; right: 0; bottom: 0;
@@ -75,7 +95,7 @@
     margin-bottom: 20px;
   }
   
-  /* 3. Los botones de "Llamar" */
+  /* 3. Los botones de "Llamar" (sin cambios) */
   .call-button-group {
     display: flex;
     flex-direction: column;
@@ -83,7 +103,7 @@
   }
   
   .call-button {
-    display: block; /* Ocupa todo el ancho */
+    display: block; 
     padding: 15px;
     font-size: 1.2em;
     font-weight: bold;
@@ -91,7 +111,7 @@
     border-radius: 8px;
     cursor: pointer;
     text-align: center;
-    text-decoration: none; /* Quita el subrayado del link */
+    text-decoration: none; 
     color: white;
     transition: all 0.2s;
   }
